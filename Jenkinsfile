@@ -6,23 +6,23 @@ pipeline {
     stages {
         stage('fetch-code') {
             steps {
-                git branch: 'main', url: 'https://github.com/<your-username>/<your-repo>.git'
+                git branch: 'main', url: 'https://github.com/godofthunder260240-collab/assign4.git'
             }
         }
         stage('build-image') {
             steps {
-                sh 'docker build -t <your-dockerhub-username>/jenkins-assignment:${BUILD_NUMBER} .'
+                sh 'docker build -t atharva260/assign4:${BUILD_NUMBER} .'
             }
         }
         stage('push-image') {
             steps {
                 sh 'echo $DOCKER_CRED_PSW | docker login -u $DOCKER_CRED_USR --password-stdin'
-                sh 'docker push <your-dockerhub-username>/jenkins-assignment:${BUILD_NUMBER}'
+                sh 'docker push atharva260/assign4:${BUILD_NUMBER}'
             }
         }
         stage('deploy') {
             steps {
-                sh 'kubectl set image deployment/ja1 jenkins-assignment=<your-dockerhub-username>/jenkins-assignment:${BUILD_NUMBER}'
+                sh 'kubectl set image deployment/ja1 assign4=atharva260/assign4:${BUILD_NUMBER}'
             }
         }
     }
